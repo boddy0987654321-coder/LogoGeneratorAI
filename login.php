@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Redirect if already logged in
 if (isset($_SESSION['user_id'])) {
     header('Location: dashboard.php');
     exit;
@@ -9,10 +8,8 @@ if (isset($_SESSION['user_id'])) {
 
 $errors = [];
 
-// Calea către fișierul JSON
 $jsonFile = 'data/users.json';
 
-// Funcție pentru a citi utilizatorii din JSON
 function getUsers($file) {
     if (!file_exists($file)) {
         return [];
@@ -39,7 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['user_name']  = $user['name'];
                 $_SESSION['user_email'] = $user['email'];
 
-                // Redirect spre dashboard după login (sau pagina cerută anterior)
                 $redirect = isset($_GET['redirect']) && $_GET['redirect'] === 'dashboard'
                     ? 'dashboard.php'
                     : 'dashboard.php';

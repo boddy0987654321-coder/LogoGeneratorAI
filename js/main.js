@@ -1,12 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-  // ========== DARK/LIGHT MODE TOGGLE ==========
   (function() {
     const themeToggle = document.getElementById('themeToggle');
     const themeIcon = document.getElementById('themeIcon');
     const themeText = document.getElementById('themeText');
     
-    // Verifică tema salvată
     const savedTheme = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     
@@ -20,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (themeText) themeText.textContent = 'Dark';
     }
     
-    // Toggle la click
     if (themeToggle) {
       themeToggle.addEventListener('click', () => {
         const currentTheme = document.documentElement.getAttribute('data-theme');
@@ -39,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   })();
 
-  // ========== GENERATE BUTTON ==========
   const generateBtn = document.getElementById('generateBtn');
   if (generateBtn) {
     generateBtn.addEventListener('click', (e) => {
@@ -64,7 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ========== LOGO PREVIEWS ==========
   const previews = document.querySelectorAll('.logo-preview');
   previews.forEach(preview => {
     preview.addEventListener('click', () => {
@@ -76,7 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ========== SMOOTH SCROLL ==========
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
       const href = this.getAttribute('href');
@@ -90,11 +84,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ========== ANIMATION DELAYS ==========
   const cards = document.querySelectorAll('.showcase-card, .pricing-card');
   cards.forEach((card, index) => { card.style.animationDelay = `${index * 0.1}s`; });
 
-  // ========== NAVBAR SCROLL EFFECT ==========
   let lastScroll = 0;
   const nav = document.querySelector('nav');
   if (nav) {

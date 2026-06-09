@@ -1,5 +1,4 @@
 :root {
-    /* Light mode (default) */
     --bg:       #ffffff;
     --card:     #f8f9fa;
     --card2:    #f0f0f3;
@@ -14,7 +13,6 @@
     --radius-lg: 20px;
     --green:    #22c55e;
     
-    /* Alte variabile pentru compatibilitate */
     --bg-primary: #ffffff;
     --bg-secondary: #f8f9fa;
     --bg-card: #f8f9fa;
@@ -25,7 +23,6 @@
 }
 
 [data-theme="dark"] {
-    /* Dark mode */
     --bg:       #0a0b10;
     --card:     #151621;
     --card2:    #1a1b2a;
@@ -40,7 +37,6 @@
     --radius-lg: 20px;
     --green:    #22c55e;
     
-    /* Alte variabile pentru compatibilitate */
     --bg-primary: #0f0f1a;
     --bg-secondary: #1a1a2e;
     --bg-card: #151621;
@@ -444,14 +440,12 @@ nav {
     color: var(--text2);
 }
 
-/* Scrollbar */
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: var(--card2); border-radius: 4px; }
 ::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--purple2); }
 ::selection { background: var(--purple); color: #fff; }
 
-/* Animații */
 .showcase-card, .pricing-card, .logo-card {
     animation: fadeInUp 0.5s ease backwards;
 }
@@ -476,7 +470,6 @@ nav {
 
 .btn-primary:active, .nav-btn:active, .generate-btn:active { transform: translateY(1px); }
 
-/* Responsive */
 @media (max-width: 768px) {
     .nav-links { display: none; }
     .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; }
@@ -488,7 +481,6 @@ nav {
 
 .btn-loading { opacity: 0.7; cursor: wait; }
 
-/* Dark/Light Mode Toggle Button */
 .theme-toggle-btn {
     background: var(--card2) !important;
     border: 1px solid var(--border) !important;
@@ -512,7 +504,6 @@ nav {
     font-weight: 500;
 }
 
-/* Dashboard specific styles */
 .dash-wrapper {
     position: relative;
     z-index: 1;
@@ -545,7 +536,6 @@ nav {
     margin-top: 4px;
 }
 
-/* Stat cards */
 .stat-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -595,7 +585,6 @@ nav {
     margin-top: 3px;
 }
 
-/* Two-column layout */
 .dash-cols {
     display: grid;
     grid-template-columns: 320px 1fr;
@@ -603,7 +592,6 @@ nav {
     align-items: start;
 }
 
-/* Panel styles */
 .panel {
     background: var(--card);
     border: 1px solid var(--border);
@@ -633,7 +621,6 @@ nav {
     font-size: 14px;
 }
 
-/* Profile card */
 .profile-card {
     background: var(--card);
     border: 1px solid var(--border);
@@ -690,7 +677,6 @@ nav {
     margin-top: 8px;
 }
 
-/* Logos grid */
 .logos-header {
     display: flex;
     align-items: center;
@@ -807,7 +793,6 @@ nav {
     color: #f87171;
 }
 
-/* Empty state */
 .empty-state {
     grid-column: 1 / -1;
     text-align: center;
@@ -825,7 +810,6 @@ nav {
 }
 .empty-desc { font-size: 13px; }
 
-/* Success banner */
 .success-banner {
     background: rgba(34, 197, 94, 0.08);
     border: 1px solid rgba(34, 197, 94, 0.2);
@@ -845,7 +829,6 @@ nav {
     to   { opacity: 1; transform: translateY(0); }
 }
 
-/* User menu */
 .user-menu { display: flex; align-items: center; gap: 12px; }
 .user-greeting { font-size: 13px; color: var(--text2); }
 .user-greeting strong { color: var(--purple2); }
@@ -865,7 +848,6 @@ nav {
 }
 .nav-link-btn:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
 
-/* Preview image */
 .preview-image {
     max-width: 180px;
     border-radius: 12px;
@@ -874,7 +856,6 @@ nav {
     border: 1px solid var(--border);
 }
 
-/* Responsive */
 @media (max-width: 900px) {
     .dash-cols { grid-template-columns: 1fr; }
     .stat-grid { grid-template-columns: 1fr 1fr; }

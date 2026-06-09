@@ -3,7 +3,6 @@ session_start();
 
 require_once 'languages.php';
 
-// ── Pagină protejată — redirect dacă nu e logat ──────────────────────────────
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php?redirect=dashboard');
     exit;
@@ -13,13 +12,11 @@ $userId   = (int) $_SESSION['user_id'];
 $userName = htmlspecialchars($_SESSION['user_name']);
 $userEmail = htmlspecialchars($_SESSION['user_email'] ?? '');
 
-// ── Citire utilizatori din users.json ────────────────────────────────────────
 function getUsers($file) {
     if (!file_exists($file)) return [];
     return json_decode(file_get_contents($file), true) ?? [];
 }
 
-// ── Citire / salvare logos.json ───────────────────────────────────────────────
 function getLogos($file) {
     if (!file_exists($file)) return [];
     return json_decode(file_get_contents($file), true) ?? [];
@@ -32,7 +29,6 @@ function saveLogos($file, $logos) {
 $logosFile = 'data/logos.json';
 $usersFile = 'data/users.json';
 
-// ── Acțiune: șterge logo ──────────────────────────────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_logo'])) {
     $deleteId = (int) $_POST['delete_logo'];
     $logos    = getLogos($logosFile);
@@ -42,12 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_logo'])) {
     exit;
 }
 
-// ── Filtrare logos pentru utilizatorul curent ─────────────────────────────────
 $allLogos   = getLogos($logosFile);
 $userLogos  = array_values(array_filter($allLogos, fn($l) => $l['user_id'] === $userId));
 $totalLogos = count($userLogos);
 
-// ── Date cont utilizator ──────────────────────────────────────────────────────
 $users        = getUsers($usersFile);
 $currentUser  = null;
 foreach ($users as $u) {
@@ -65,7 +59,6 @@ $memberSince = $currentUser ? date('M Y', strtotime($currentUser['created_at']))
   <link rel="stylesheet" href="css/style.css">
   <style>
 
-    /* ── Layout ────────────────────────────────────────────────────────────── */
     .dash-wrapper {
       position: relative;
       z-index: 1;
@@ -74,7 +67,6 @@ $memberSince = $currentUser ? date('M Y', strtotime($currentUser['created_at']))
       padding: 88px 48px 80px;
     }
 
-    /* ── Top header ─────────────────────────────────────────────────────────── */
     .dash-header {
       display: flex;
       align-items: center;
@@ -102,7 +94,6 @@ $memberSince = $currentUser ? date('M Y', strtotime($currentUser['created_at']))
       align-items: center;
     }
 
-    /* ── Stat cards ──────────────────────────────────────────────────────────── */
     .stat-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -146,7 +137,6 @@ $memberSince = $currentUser ? date('M Y', strtotime($currentUser['created_at']))
       margin-top: 3px;
     }
 
-    /* ── Two-column layout ───────────────────────────────────────────────────── */
     .dash-cols {
       display: grid;
       grid-template-columns: 320px 1fr;
@@ -154,7 +144,6 @@ $memberSince = $currentUser ? date('M Y', strtotime($currentUser['created_at']))
       align-items: start;
     }
 
-    /* ── Generator panel ─────────────────────────────────────────────────────── */
     .panel {
       background: var(--card);
       border: 1px solid var(--border);
@@ -238,7 +227,6 @@ $memberSince = $currentUser ? date('M Y', strtotime($currentUser['created_at']))
     .generate-btn:hover { opacity: 0.9; transform: translateY(-1px); }
     .generate-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-    /* ── User profile card ───────────────────────────────────────────────────── */
     .profile-card {
       background: var(--card);
       border: 1px solid var(--border);
@@ -290,7 +278,6 @@ $memberSince = $currentUser ? date('M Y', strtotime($currentUser['created_at']))
       margin-top: 8px;
     }
 
-    /* ── Logos grid ──────────────────────────────────────────────────────────── */
     .logos-header {
       display: flex;
       align-items: center;
@@ -402,7 +389,6 @@ $memberSince = $currentUser ? date('M Y', strtotime($currentUser['created_at']))
       color: #f87171;
     }
 
-    /* ── Empty state ─────────────────────────────────────────────────────────── */
     .empty-state {
       grid-column: 1 / -1;
       text-align: center;
@@ -423,7 +409,6 @@ $memberSince = $currentUser ? date('M Y', strtotime($currentUser['created_at']))
     }
     .empty-desc { font-size: 13px; }
 
-    /* ── Success banner ──────────────────────────────────────────────────────── */
     .success-banner {
       background: rgba(34, 197, 94, 0.08);
       border: 1px solid rgba(34, 197, 94, 0.2);
@@ -442,7 +427,6 @@ $memberSince = $currentUser ? date('M Y', strtotime($currentUser['created_at']))
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── Nav user menu ───────────────────────────────────────────────────────── */
     .user-menu { display: flex; align-items: center; gap: 12px; }
     .user-greeting { font-size: 13px; color: var(--text2); }
     .user-greeting strong { color: var(--purple2); }
@@ -462,7 +446,6 @@ $memberSince = $currentUser ? date('M Y', strtotime($currentUser['created_at']))
     }
     .nav-link-btn:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
 
-    /* ── Preview image style ─────────────────────────────────────────────────── */
     .preview-image {
       max-width: 180px;
       border-radius: 12px;
@@ -471,7 +454,6 @@ $memberSince = $currentUser ? date('M Y', strtotime($currentUser['created_at']))
       border: 1px solid var(--border);
     }
 
-    /* ── Dark/Light Mode Toggle Button ───────────────────────────────────────── */
     .theme-toggle-btn {
         background: var(--card2) !important;
         border: 1px solid var(--border) !important;
@@ -493,7 +475,6 @@ $memberSince = $currentUser ? date('M Y', strtotime($currentUser['created_at']))
         font-weight: 500;
     }
 
-    /* ── Language Switch Buttons ─────────────────────────────────────────────── */
     .language-switch {
         display: flex;
         gap: 5px;
@@ -519,7 +500,6 @@ $memberSince = $currentUser ? date('M Y', strtotime($currentUser['created_at']))
         color: white;
     }
 
-    /* ── Responsive ──────────────────────────────────────────────────────────── */
     @media (max-width: 900px) {
       .dash-cols { grid-template-columns: 1fr; }
       .stat-grid { grid-template-columns: 1fr 1fr; }
@@ -532,7 +512,6 @@ $memberSince = $currentUser ? date('M Y', strtotime($currentUser['created_at']))
 </head>
 <body>
 
-  <!-- ── Nav ──────────────────────────────────────────────────────────────── -->
   <nav>
     <div class="nav-logo">Neuro<span>Logo</span> AI</div>
     <ul class="nav-links">
@@ -540,7 +519,6 @@ $memberSince = $currentUser ? date('M Y', strtotime($currentUser['created_at']))
       <li><a href="dashboard.php" style="color:var(--text);"><?= t('nav_dashboard') ?></a></li>
     </ul>
     <div class="user-menu">
-      <!-- Butoane schimbare limbă -->
       <div class="language-switch">
         <a href="?lang=ro" style="text-decoration: none;">
           <button class="lang-btn <?= $current_lang == 'ro' ? 'active' : '' ?>">RO</button>
@@ -550,7 +528,6 @@ $memberSince = $currentUser ? date('M Y', strtotime($currentUser['created_at']))
         </a>
       </div>
       
-      <!-- Buton Dark/Light Mode -->
       <button id="themeToggle" class="theme-toggle-btn">
         <span id="themeIcon">🌙</span>
         <span id="themeText"><?= t('dark_mode') ?></span>
@@ -563,14 +540,12 @@ $memberSince = $currentUser ? date('M Y', strtotime($currentUser['created_at']))
 
   <div class="dash-wrapper">
 
-    <!-- ── Success banner ──────────────────────────────────────────────────── -->
     <?php if (isset($_GET['generated'])): ?>
       <div class="success-banner">
         ✓ <?= t('logo_saved_success') ?>
       </div>
     <?php endif; ?>
 
-    <!-- ── Header ──────────────────────────────────────────────────────────── -->
     <div class="dash-header">
       <div>
         <div class="dash-greeting"><?= t('dashboard_welcome') ?> <span><?= $userName ?></span> 👋</div>
@@ -578,7 +553,6 @@ $memberSince = $currentUser ? date('M Y', strtotime($currentUser['created_at']))
       </div>
     </div>
 
-    <!-- ── Stat cards ───────────────────────────────────────────────────────── -->
     <div class="stat-grid">
       <div class="stat-card">
         <div class="stat-icon purple">🎨</div>
@@ -603,13 +577,10 @@ $memberSince = $currentUser ? date('M Y', strtotime($currentUser['created_at']))
       </div>
     </div>
 
-    <!-- ── Two-column layout ────────────────────────────────────────────────── -->
     <div class="dash-cols">
 
-      <!-- Left: profile + generator -->
       <div>
 
-        <!-- Profile card -->
         <div class="profile-card">
           <div class="profile-avatar"><?= mb_strtoupper(mb_substr($userName, 0, 1)) ?></div>
           <div class="profile-name"><?= $userName ?></div>
@@ -618,7 +589,6 @@ $memberSince = $currentUser ? date('M Y', strtotime($currentUser['created_at']))
           <div class="profile-since"><?= t('dashboard_member_since') ?> <?= $memberSince ?></div>
         </div>
 
-        <!-- Generator form -->
         <div class="panel">
           <div class="panel-title">
             <div class="panel-title-icon">✦</div>
@@ -669,13 +639,11 @@ $memberSince = $currentUser ? date('M Y', strtotime($currentUser['created_at']))
             </button>
           </form>
 
-          <!-- Aici se va afișa previzualizarea logo-ului generat -->
           <div id="generatedPreview" style="margin-top: 20px;"></div>
         </div>
 
       </div>
 
-      <!-- Right: saved logos -->
       <div class="panel">
         <div class="logos-header">
           <div class="panel-title" style="margin-bottom:0;">
@@ -696,7 +664,6 @@ $memberSince = $currentUser ? date('M Y', strtotime($currentUser['created_at']))
             <?php foreach (array_reverse($userLogos) as $i => $logo): ?>
               <div class="logo-card" style="animation-delay: <?= $i * 0.05 ?>s">
 
-                <!-- Delete button -->
                 <form method="POST" action="dashboard.php" style="display:contents;">
                   <button class="delete-btn" type="submit" name="delete_logo"
                           value="<?= (int)$logo['id'] ?>"
@@ -725,12 +692,11 @@ $memberSince = $currentUser ? date('M Y', strtotime($currentUser['created_at']))
         </div>
       </div>
 
-    </div><!-- /.dash-cols -->
+    </div>
 
-  </div><!-- /.dash-wrapper -->
+  </div>
 
   <script>
-  // Dark/Light Mode Toggle
   (function() {
       const themeToggle = document.getElementById('themeToggle');
       const themeIcon = document.getElementById('themeIcon');
@@ -767,7 +733,6 @@ $memberSince = $currentUser ? date('M Y', strtotime($currentUser['created_at']))
       }
   })();
 
-  // Dashboard - Generare logo cu API real
   document.addEventListener('DOMContentLoaded', function() {
       const generateForm = document.getElementById('generateForm');
       if (!generateForm) return;
@@ -789,13 +754,11 @@ $memberSince = $currentUser ? date('M Y', strtotime($currentUser['created_at']))
               return;
           }
           
-          // Reset preview
           previewDiv.innerHTML = '<div style="padding: 20px; background: var(--card2); border-radius: 12px; color: var(--text3); text-align: center;">⏳ <?= t('dashboard_generating') ?><br><small style="font-size: 11px;"><?= t('dashboard_generating_time') ?></small></div>';
           generateBtn.textContent = '✦ <?= t('generating') ?>...';
           generateBtn.disabled = true;
           
           try {
-              // Generează logo cu API
               const generateResponse = await fetch('api/generate_logo.php', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
@@ -806,7 +769,6 @@ $memberSince = $currentUser ? date('M Y', strtotime($currentUser['created_at']))
               console.log('API Response:', generateResult);
               
               if (generateResult.success && generateResult.image_url) {
-                  // Afișează previzualizarea cu imaginea reală
                   let previewHtml = '<div style="background: var(--card2); border-radius: 12px; padding: 16px; margin-top: 16px; text-align: center;">';
                   previewHtml += '<p style="font-size: 12px; color: var(--text2); margin-bottom: 12px;">✨ <?= t('dashboard_ai_generated') ?></p>';
                   previewHtml += `<img src="${generateResult.image_url}" alt="Generated Logo" style="max-width: 100%; border-radius: 12px; border: 1px solid var(--border);">`;
@@ -814,7 +776,6 @@ $memberSince = $currentUser ? date('M Y', strtotime($currentUser['created_at']))
                   previewHtml += '</div>';
                   previewDiv.innerHTML = previewHtml;
                   
-                  // Salvează când utilizatorul apasă butonul
                   document.getElementById('confirmSaveBtn')?.addEventListener('click', async function() {
                       this.textContent = '<?= t('dashboard_saving') ?>...';
                       this.disabled = true;
@@ -847,7 +808,6 @@ $memberSince = $currentUser ? date('M Y', strtotime($currentUser['created_at']))
                   
                   generateBtn.textContent = '✓ <?= t('dashboard_generated') ?>';
               } else {
-                  // Afișează eroarea detaliată
                   let errorMsg = generateResult.error || '<?= t('unknown_error') ?>';
                   if (generateResult.message) errorMsg = generateResult.message;
                   previewDiv.innerHTML = `<div style="background: rgba(239,68,68,0.1); border-radius: 12px; padding: 16px; color: #f87171; text-align: center;">

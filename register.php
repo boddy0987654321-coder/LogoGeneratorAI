@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Redirect if already logged in
 if (isset($_SESSION['user_id'])) {
     header('Location: index.php');
     exit;
@@ -10,10 +9,8 @@ if (isset($_SESSION['user_id'])) {
 $errors = [];
 $success = '';
 
-// Calea către fișierul JSON
 $jsonFile = 'data/user.json';
 
-// Funcție pentru a citi utilizatorii din JSON
 function getUsers($file) {
     if (!file_exists($file)) {
         return [];
@@ -22,7 +19,6 @@ function getUsers($file) {
     return json_decode($content, true) ?? [];
 }
 
-// Funcție pentru a salva utilizatorii în JSON
 function saveUsers($file, $users) {
     file_put_contents($file, json_encode($users, JSON_PRETTY_PRINT));
 }
@@ -33,7 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
     $confirm  = $_POST['confirm_password'] ?? '';
 
-    // Validări
     if (empty($name)) {
         $errors[] = 'Full name is required.';
     }
@@ -50,7 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         $users = getUsers($jsonFile);
         
-        // Verifică dacă emailul există deja
         $emailExists = false;
         foreach ($users as $user) {
             if ($user['email'] === $email) {
@@ -62,7 +56,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($emailExists) {
             $errors[] = 'This email address is already registered.';
         } else {
-            // Creează noul utilizator
             $newUser = [
                 'id' => count($users) + 1,
                 'name' => $name,

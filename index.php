@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'languages.php';  // ← ADĂUGAT
+require_once 'languages.php';  
 
 $isLoggedIn = isset($_SESSION['user_id']);
 $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['user_name']) : '';
@@ -11,6 +11,7 @@ $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['user_name']) : '';
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NeuroLogo AI — AI Logo Generator</title>
+  <link rel="icon" type="image/x-icon" href="/assets/favicon.png">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <style>
@@ -100,6 +101,8 @@ $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['user_name']) : '';
     }
     .cta-title { font-family: 'Syne', sans-serif; font-size: clamp(28px, 3vw, 38px); font-weight: 800; margin-bottom: 16px; }
     .cta-desc { font-size: 14px; color: var(--text3); margin-bottom: 32px; max-width: 500px; margin-left: auto; margin-right: auto; }
+    
+    /* Configurare Stiluri Footer */
     .footer {
       position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 48px 48px 32px;
       background: rgba(10,11,16,0.6);
@@ -111,16 +114,24 @@ $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['user_name']) : '';
     .footer-logo span { color: var(--purple2); }
     .footer-desc { font-size: 13px; color: var(--text3); line-height: 1.6; max-width: 250px; }
     .footer-col h4 { font-size: 14px; font-weight: 600; margin-bottom: 20px; color: var(--text); }
-    .footer-col ul { list-style: none; }
+    .footer-col ul { list-style: none; padding: 0; margin: 0; }
     .footer-col ul li { margin-bottom: 10px; }
-    .footer-col ul li a { color: var(--text3); text-decoration: none; font-size: 13px; transition: color 0.2s; }
-    .footer-col ul li a:hover { color: var(--purple2); }
+    .footer-col ul li a { 
+      color: var(--text3); 
+      text-decoration: none; 
+      font-size: 13px; 
+      transition: color 0.2s ease, padding-left 0.2s ease; 
+      display: inline-block;
+    }
+    .footer-col ul li a:hover { 
+      color: var(--purple2); 
+      padding-left: 4px; 
+    }
     .footer-bottom {
       max-width: 1200px; margin: 0 auto; text-align: center; padding-top: 40px; margin-top: 40px;
       border-top: 1px solid var(--border); font-size: 12px; color: var(--text3);
     }
     
-    /* Dark/Light Mode Toggle Button */
     .theme-toggle-btn {
         background: var(--card2) !important;
         border: 1px solid var(--border) !important;
@@ -142,7 +153,6 @@ $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['user_name']) : '';
         font-weight: 500;
     }
     
-    /* Language Switch Buttons */
     .language-switch {
         display: flex;
         gap: 5px;
@@ -188,7 +198,6 @@ $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['user_name']) : '';
 
   <?php if ($isLoggedIn): ?>
     <div class="user-menu">
-      <!-- Language Switch Buttons -->
       <div class="language-switch">
         <a href="?lang=ro" style="text-decoration: none;">
           <button class="lang-btn <?= $current_lang == 'ro' ? 'active' : '' ?>">RO</button>
@@ -208,7 +217,6 @@ $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['user_name']) : '';
     </div>
   <?php else: ?>
     <div class="user-menu">
-      <!-- Language Switch Buttons -->
       <div class="language-switch">
         <a href="?lang=ro" style="text-decoration: none;">
           <button class="lang-btn <?= $current_lang == 'ro' ? 'active' : '' ?>">RO</button>
@@ -238,7 +246,6 @@ $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['user_name']) : '';
   </div>
 <?php endif; ?>
 
-<!-- Hero Section -->
 <section class="hero">
   <div class="hero-left">
     <div class="hero-badge">
@@ -324,7 +331,6 @@ $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['user_name']) : '';
   </div>
 </section>
 
-<!-- Popular AI Designs Section -->
 <section class="design-showcase" id="designs">
   <div class="section-header">
     <div class="section-badge"><span>✦</span> <?= t('showcase_badge') ?></div>
@@ -337,7 +343,6 @@ $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['user_name']) : '';
   </div>
 </section>
 
-<!-- Pricing Section -->
 <section class="pricing-section" id="pricing">
   <div class="section-header">
     <div class="section-badge"><span>💰</span> <?= t('pricing_badge') ?></div>
@@ -369,7 +374,6 @@ $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['user_name']) : '';
   </div>
 </section>
 
-<!-- CTA Section -->
 <section class="cta-section">
   <div class="cta-card">
     <h2 class="cta-title"><?= t('cta_title') ?></h2>
@@ -378,22 +382,41 @@ $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['user_name']) : '';
   </div>
 </section>
 
-<!-- Footer -->
 <footer class="footer">
   <div class="footer-grid">
     <div class="footer-col">
       <div class="footer-logo">Neuro<span>Logo</span> AI</div>
       <p class="footer-desc">AI-powered logo generation platform for startups and businesses.</p>
     </div>
-    <div class="footer-col"><h4><?= t('footer_product') ?></h4><ul><li><a href="#"><?= t('footer_premium') ?></a></li><li><a href="#"><?= t('footer_templates') ?></a></li><li><a href="#"><?= t('footer_pricing') ?></a></li><li><a href="#"><?= t('footer_integrations') ?></a></li></ul></div>
-    <div class="footer-col"><h4><?= t('footer_resources') ?></h4><ul><li><a href="#"><?= t('footer_documentation') ?></a></li><li><a href="#"><?= t('footer_help') ?></a></li><li><a href="#"><?= t('footer_api') ?></a></li></ul></div>
-    <div class="footer-col"><h4><?= t('footer_company') ?></h4><ul><li><a href="#"><?= t('footer_about') ?></a></li><li><a href="#"><?= t('footer_careers') ?></a></li><li><a href="#"><?= t('footer_privacy') ?></a></li><li><a href="#"><?= t('footer_terms') ?></a></li></ul></div>
+    <div class="footer-col">
+      <h4><?= t('footer_product') ?></h4>
+      <ul>
+        <li><a href="premium.php"><?= t('footer_premium') ?></a></li>
+        <li><a href="#designs"><?= t('footer_templates') ?></a></li> <li><a href="#pricing"><?= t('footer_pricing') ?></a></li>    <li><a href="integrations.php"><?= t('footer_integrations') ?></a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4><?= t('footer_resources') ?></h4>
+      <ul>
+        <li><a href="documentation.php"><?= t('footer_documentation') ?></a></li>
+        <li><a href="help.php"><?= t('footer_help') ?></a></li>
+        <li><a href="api_docs.php"><?= t('footer_api') ?></a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4><?= t('footer_company') ?></h4>
+      <ul>
+        <li><a href="about.php"><?= t('footer_about') ?></a></li>
+        <li><a href="careers.php"><?= t('footer_careers') ?></a></li>
+        <li><a href="privacy.php"><?= t('footer_privacy') ?></a></li>
+        <li><a href="terms.php"><?= t('footer_terms') ?></a></li>
+      </ul>
+    </div>
   </div>
-  <div class="footer-bottom">© 2023 NeuroLogo AI. <?= t('footer_copyright') ?></div>
+  <div class="footer-bottom">© 2026 NeuroLogo AI. <?= t('footer_copyright') ?></div>
 </footer>
 
 <script>
-// Dark/Light Mode Toggle
 (function() {
     const themeToggle = document.getElementById('themeToggle');
     const themeIcon = document.getElementById('themeIcon');
@@ -430,7 +453,6 @@ $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['user_name']) : '';
     }
 })();
 
-// Additional JavaScript for interactivity
 document.addEventListener('DOMContentLoaded', () => {
     const generateBtn = document.getElementById('generateBtn');
     if (generateBtn && !generateBtn.getAttribute('onclick')) {

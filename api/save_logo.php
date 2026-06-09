@@ -1,5 +1,4 @@
 <?php
-// api/save_logo.php
 
 header('Content-Type: application/json');
 session_start();
@@ -24,7 +23,6 @@ if (empty($brandName)) {
     exit;
 }
 
-// Funcții pentru JSON
 function getLogos($file) {
     if (!file_exists($file)) return [];
     return json_decode(file_get_contents($file), true) ?? [];

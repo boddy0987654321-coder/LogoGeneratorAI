@@ -1,5 +1,4 @@
 <?php
-// api/generate_logo.php
 
 set_time_limit(300);
 error_reporting(0);
@@ -85,19 +84,16 @@ if ($httpCode !== 200) {
     exit;
 }
 
-// Verifică dacă avem URL sau Base64
 $imageUrl = $responseData['data'][0]['url'] ?? '';
 $b64Json = $responseData['data'][0]['b64_json'] ?? '';
 
 if (!empty($imageUrl)) {
-    // Dacă avem URL, îl returnăm direct
     echo json_encode([
         'success' => true,
         'image_url' => $imageUrl,
         'prompt' => $prompt
     ]);
 } elseif (!empty($b64Json)) {
-    // Dacă avem Base64, creăm un URL de date
     $dataUrl = 'data:image/png;base64,' . $b64Json;
     echo json_encode([
         'success' => true,
