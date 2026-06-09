@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "name": "Bogdan",
+        "email": "boddy0987654321@gmail.com",
+        "password": "$2y$10$xT\/oyjm4N\/y1SUjZBV8k2.9uNg0cDj.3A69gmE2IeUBYxImUIG2hy",
+        "created_at": "2026-06-02 10:41:59"
+    },
+    {
+        "id": 2,
+        "name": "Bogdan",
+        "email": "bogdanpopusoi07@gmail.com",
+        "password": "$2y$10$DmQEfPdDW0XXMTHTF3BKQ.bXHKLrrQ1wwmdVKr\/kWde8T.omuwUZe",
+        "created_at": "2026-06-02 10:48:38"
+    }
+]
